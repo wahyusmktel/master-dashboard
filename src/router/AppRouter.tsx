@@ -4,6 +4,8 @@ import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute"; // <--- Import ini
+import Profile from "@/pages/Profile";
+import SampleTable from "@/pages/SampleTable";
 
 export default function AppRouter() {
   return (
@@ -21,6 +23,8 @@ export default function AppRouter() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/profile" element={<Profile />} />
+            <Route path="/dashboard/table" element={<SampleTable />} />
 
             {/* Nanti kalau nambah halaman lain, taruh sini. Contoh: */}
             {/* <Route path="/dashboard/users" element={<UsersPage />} /> */}

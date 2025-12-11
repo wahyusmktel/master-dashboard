@@ -6,6 +6,7 @@ import {
   Shield,
   UserPlus,
   List,
+  Table as TableIcon,
 } from "lucide-react";
 
 // Definisikan tipe data menu biar aman
@@ -44,6 +45,11 @@ export const navItems: NavItem[] = [
         icon: Shield,
       },
     ],
+  },
+  {
+    title: "Data Master",
+    href: "/dashboard/table",
+    icon: TableIcon, // Pakai icon Table
   },
   {
     title: "Projects",

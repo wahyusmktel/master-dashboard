@@ -9,11 +9,21 @@ import {
   Download,
 } from "lucide-react";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import TrackingWidget from "@/components/shared/TrackingWidget";
+import RevenueChart from "@/components/shared/RevenueChart";
+import CalendarWidget from "@/components/shared/CalendarWidget";
 
 export default function Dashboard() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 pb-8">
       {/* HEADER TITLE */}
       <div>
         <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -190,16 +200,29 @@ export default function Dashboard() {
       {/* --- CHART SECTION & TRACKING WIDGET (UPDATED) --- */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
         {/* Kolom Kiri: Chart (Lebar 4/7) */}
-        <Card className="col-span-4 dark:bg-slate-900 dark:border-slate-800 lg:col-span-4">
+        {/* Kolom Kiri: Chart (Lebar 4/7) */}
+        <Card className="col-span-4 lg:col-span-4 shadow-sm dark:bg-slate-900 dark:border-slate-800">
           <CardHeader>
-            <CardTitle className="dark:text-white">
-              Overview Pendapatan
+            <CardTitle className="dark:text-white flex items-center justify-between">
+              <span>Overview Pendapatan</span>
+              {/* Opsional: Dropdown Filter Tahun */}
+              <Select defaultValue="2025">
+                <SelectTrigger className="w-[140px] h-8 text-xs font-medium bg-transparent border-slate-200 dark:border-slate-700">
+                  <SelectValue placeholder="Pilih Tahun" />
+                </SelectTrigger>
+                <SelectContent align="end">
+                  <SelectItem value="2025">Tahun 2025</SelectItem>
+                  <SelectItem value="2024">Tahun 2024</SelectItem>
+                  <SelectItem value="2023">Tahun 2023</SelectItem>
+                </SelectContent>
+              </Select>
             </CardTitle>
           </CardHeader>
-          <CardContent className="pl-2">
-            <div className="h-[350px] flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 border border-dashed border-slate-200 dark:border-slate-700">
-              Area Chart Disini
-            </div>
+          <CardContent className="pl-0">
+            {" "}
+            {/* pl-0 biar chart mentok kiri */}
+            {/* WIDGET CHART APEXCHARTS DISINI */}
+            <RevenueChart />
           </CardContent>
         </Card>
 
@@ -207,6 +230,56 @@ export default function Dashboard() {
         <div className="col-span-3 lg:col-span-3">
           <TrackingWidget />
         </div>
+      </div>
+
+      {/* --- NEW SECTION: AGENDA & JADWAL --- */}
+      <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-3">
+        {/* Calendar Widget ambil 2/3 lebar layar karena kontennya banyak */}
+        <div className="lg:col-span-2">
+          <CalendarWidget />
+        </div>
+
+        {/* Sisa 1/3 Kolom kita bisa taruh Recent Sales disini (sebagai list ringkas) */}
+        <Card className="shadow-sm dark:bg-slate-900 dark:border-slate-800 flex flex-col">
+          <CardHeader>
+            <CardTitle className="dark:text-white">
+              Recent Transactions
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex-1 overflow-auto">
+            <div className="space-y-4">
+              {[1, 2, 3, 4, 5].map((_, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between border-b pb-3 last:border-0 last:pb-0 dark:border-slate-800"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="h-9 w-9 rounded-full bg-red-50 text-red-600 flex items-center justify-center font-bold text-xs dark:bg-red-900/20">
+                      U{i + 1}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white">
+                        User Client {i + 1}
+                      </p>
+                      <p className="text-xs text-slate-500">
+                        2 menit yang lalu
+                      </p>
+                    </div>
+                  </div>
+                  <div className="font-bold text-sm text-green-600">
+                    +$250.00
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Button
+              variant="outline"
+              className="w-full mt-4 border-dashed border-slate-300 text-slate-500 hover:text-red-600 hover:border-red-300 dark:border-slate-700"
+            >
+              Lihat Semua Transaksi
+            </Button>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Kolom Bawah: Recent Sales (Opsional, pindah ke bawah full width atau biarkan) */}

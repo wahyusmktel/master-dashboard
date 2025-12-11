@@ -9,7 +9,7 @@ import {
   HelpCircle,
   LogOut,
   Bell,
-  Sun, 
+  Sun,
   Moon, // Import Icon Bell
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -331,9 +331,16 @@ export default function Header() {
             <DropdownMenuSeparator className="bg-slate-100" />
           </div>
           <div className="space-y-1 px-1">
-            <DropdownMenuItem className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 font-medium hover:bg-slate-50 focus:bg-slate-50 transition-colors">
-              <User className="h-5 w-5 text-slate-400" />
-              Edit profile
+            <DropdownMenuItem
+              asChild
+              className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 focus:bg-slate-50 dark:focus:bg-slate-800 transition-colors"
+            >
+              {/* Pindahkan semua class styling ke induk (DropdownMenuItem) */}
+              <Link to="/dashboard/profile" className="w-full">
+                <User className="h-5 w-5 text-slate-400 mr-3" />{" "}
+                {/* Kasih margin right di icon biar aman */}
+                Edit profile
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 font-medium hover:bg-slate-50 focus:bg-slate-50 transition-colors">
               <Settings className="h-5 w-5 text-slate-400" />
