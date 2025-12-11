@@ -7,7 +7,8 @@ import {
   User,
   Settings,
   HelpCircle,
-  LogOut, // Import ikon-ikon baru
+  LogOut,
+  Bell, // Import Icon Bell
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,11 +26,60 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"; // Import Popover
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { navItems } from "@/config/menu";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+
+// --- MOCK DATA NOTIFIKASI (Sesuai Referensi Gambar) ---
+const notifications = [
+  {
+    id: 1,
+    name: "Terry Franci",
+    action: "requests permission to change",
+    project: "Project - Nganter App",
+    time: "5 min ago",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=60",
+    status: "online", // green
+  },
+  {
+    id: 2,
+    name: "Alena Franci",
+    action: "requests permission to change",
+    project: "Project - Nganter App",
+    time: "8 min ago",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=60",
+    status: "online",
+  },
+  {
+    id: 3,
+    name: "Jocelyn Kenter",
+    action: "requests permission to change",
+    project: "Project - Nganter App",
+    time: "15 min ago",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=60",
+    status: "online",
+  },
+  {
+    id: 4,
+    name: "Brandon Philips",
+    action: "requests permission to change",
+    project: "Project - Nganter App",
+    time: "1 hr ago",
+    avatar:
+      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&auto=format&fit=crop&q=60",
+    status: "busy", // red
+  },
+];
 
 export default function Header() {
   const navigate = useNavigate();
@@ -77,7 +127,6 @@ export default function Header() {
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
-
         <SheetContent
           side="left"
           className="flex flex-col w-[300px] sm:w-[350px]"
@@ -90,7 +139,6 @@ export default function Header() {
               Master Menu
             </SheetTitle>
           </SheetHeader>
-
           <nav className="grid gap-2 text-lg font-medium">
             {navItems.map((item, index) => {
               const Icon = item.icon;
@@ -113,32 +161,114 @@ export default function Header() {
               );
             })}
           </nav>
-
           <div className="mt-auto pb-4">
             <Button
               variant="outline"
               className="w-full justify-start gap-3 rounded-xl py-6 text-red-600 border-red-100 hover:bg-red-50 hover:text-red-700"
               onClick={handleLogout}
             >
-              <LogOut className="h-5 w-5" />{" "}
-              {/* Tambah Icon Logout di Mobile juga */}
+              <LogOut className="h-5 w-5" />
               <span className="font-bold">Log Out</span>
             </Button>
           </div>
         </SheetContent>
       </Sheet>
 
-      <div className="w-full flex-1">{/* Spacer */}</div>
+      {/* Spacer Spacer (Biar konten kanan mojok) */}
+      <div className="w-full flex-1"></div>
 
-      {/* --- USER PROFILE DROPDOWN (UPDATED) --- */}
+      {/* --- NOTIFICATION POPOVER (NEW) --- */}
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative rounded-full h-10 w-10 border border-slate-200 shadow-sm hover:bg-slate-100 focus-visible:ring-0"
+          >
+            <Bell className="h-5 w-5 text-slate-600" />
+            {/* Red Dot Indicator (Unread) */}
+            <span className="absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-red-600 border border-white"></span>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          align="end"
+          className="w-[380px] p-0 rounded-2xl shadow-xl overflow-hidden mr-2"
+        >
+          {/* Header Notifikasi */}
+          <div className="flex items-center justify-between px-4 py-3 border-b bg-white">
+            <h4 className="font-bold text-lg text-slate-900">Notification</h4>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-full text-slate-400 hover:text-slate-900"
+            >
+              <X className="h-4 w-4" />{" "}
+              {/* Icon Close (Hiasan, karena popover close otomatis) */}
+            </Button>
+          </div>
+
+          {/* List Notifikasi (Scrollable) */}
+          <div className="max-h-[350px] overflow-y-auto">
+            {notifications.map((item) => (
+              <div
+                key={item.id}
+                className="flex gap-4 p-4 hover:bg-slate-50 transition-colors border-b last:border-0 cursor-pointer"
+              >
+                {/* Avatar dengan Status Dot */}
+                <div className="relative shrink-0">
+                  <Avatar className="h-10 w-10 border border-slate-100">
+                    <AvatarImage src={item.avatar} alt={item.name} />
+                    <AvatarFallback>{item.name[0]}</AvatarFallback>
+                  </Avatar>
+                  {/* Status Dot (Green/Red) */}
+                  <span
+                    className={cn(
+                      "absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white",
+                      item.status === "online" ? "bg-green-500" : "bg-red-500"
+                    )}
+                  />
+                </div>
+
+                {/* Text Content */}
+                <div className="space-y-1">
+                  <p className="text-sm text-slate-600 leading-snug">
+                    <span className="font-bold text-slate-900">
+                      {item.name}
+                    </span>{" "}
+                    {item.action}{" "}
+                    <span className="font-bold text-slate-900">
+                      {item.project}
+                    </span>
+                  </p>
+                  <p className="text-xs font-medium text-slate-400 flex items-center gap-1">
+                    Project • {item.time}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Footer Button 'View All' */}
+          <div className="p-4 border-t bg-slate-50/50">
+            <Button
+              variant="outline"
+              className="w-full rounded-xl border-slate-200 text-slate-700 font-bold hover:bg-white hover:text-slate-900 hover:shadow-sm h-11"
+            >
+              View All Notifications
+            </Button>
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      {/* --- USER PROFILE DROPDOWN --- */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full h-9 w-9 border border-slate-200 shadow-sm focus-visible:ring-0"
+            className="rounded-full h-10 w-10 border border-slate-200 shadow-sm focus-visible:ring-0"
           >
-            <Avatar className="h-8 w-8">
+            <Avatar className="h-9 w-9">
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
@@ -146,12 +276,10 @@ export default function Header() {
           </Button>
         </DropdownMenuTrigger>
 
-        {/* Konten Dropdown Disesuaikan dengan Referensi Gambar */}
         <DropdownMenuContent
           align="end"
-          className="w-72 rounded-xl shadow-xl p-2 mt-2"
+          className="w-72 rounded-xl shadow-xl p-2 mt-2 mr-4"
         >
-          {/* Header Info User */}
           <DropdownMenuLabel className="p-4">
             <div className="flex flex-col space-y-1">
               <p className="text-base font-bold text-slate-900 leading-none">
@@ -162,34 +290,26 @@ export default function Header() {
               </p>
             </div>
           </DropdownMenuLabel>
-
           <div className="px-2 pb-2">
             <DropdownMenuSeparator className="bg-slate-100" />
           </div>
-
-          {/* Menu Items Group */}
           <div className="space-y-1 px-1">
             <DropdownMenuItem className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 font-medium hover:bg-slate-50 focus:bg-slate-50 transition-colors">
               <User className="h-5 w-5 text-slate-400" />
               Edit profile
             </DropdownMenuItem>
-
             <DropdownMenuItem className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 font-medium hover:bg-slate-50 focus:bg-slate-50 transition-colors">
               <Settings className="h-5 w-5 text-slate-400" />
               Account settings
             </DropdownMenuItem>
-
             <DropdownMenuItem className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 font-medium hover:bg-slate-50 focus:bg-slate-50 transition-colors">
               <HelpCircle className="h-5 w-5 text-slate-400" />
               Support
             </DropdownMenuItem>
           </div>
-
           <div className="p-2">
             <DropdownMenuSeparator className="bg-slate-100" />
           </div>
-
-          {/* Sign Out Button */}
           <div className="px-1 pb-1">
             <DropdownMenuItem
               onClick={handleLogout}
