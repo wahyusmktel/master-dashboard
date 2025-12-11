@@ -1,73 +1,116 @@
-# React + TypeScript + Vite
+# 🚀 Master Dashboard Pro - React TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Master Dashboard Banner](./docs/dashboard-preview.png)
 
-Currently, two official plugins are available:
+> **Modern, Scalable, and Production-Ready Dashboard Boilerplate.**
+> Dibangun dengan teknologi web modern untuk mempercepat pengembangan aplikasi Enterprise.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[![React](https://img.shields.io/badge/React-18-blue?style=flat-square&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5-purple?style=flat-square&logo=vite)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-cyan?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-latest-black?style=flat-square&logo=shadcnui)](https://ui.shadcn.com/)
 
-## React Compiler
+## ✨ Fitur Unggulan
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+Template ini sudah dilengkapi dengan fitur-fitur esensial yang siap pakai:
 
-## Expanding the ESLint configuration
+### 🛡️ Authentication & Security
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Secure Login Page:** Desain split-screen modern dengan animasi gradient & validasi form.
+- **Auth Guard (Protected Routes):** Mencegah akses tanpa token.
+- **Guest Guard (Public Routes):** Redirect otomatis jika user sudah login.
+- **Logout Handling:** Manajemen sesi yang aman.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🎨 UI & UX Experience
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Modern Sidebar:** Collapsible, responsive, dan support multi-level menu (hybrid navigation).
+- **Dark Mode Support:** Tema gelap/terang terintegrasi penuh (system & manual switch).
+- **Interactive Widgets:**
+  - 📈 **Revenue Chart:** Area chart modern dengan efek gradasi (ApexCharts).
+  - 🚚 **Order Tracking:** Widget tracking status pengiriman dengan timeline vertikal.
+  - 📅 **Agenda & Calendar:** Manajemen jadwal harian dengan indikator "Live Event".
+- **Top Bar Notification:** Popover notifikasi interaktif dengan status indikator.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 📊 Advanced Data Table
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Ditenagai oleh **TanStack Table (React Table v8)**:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- ✅ **Selection:** Checkbox massal & per baris.
+- 🔍 **Smart Filtering:** Search realtime & filter berdasarkan status.
+- 📄 **Pagination:** Custom pagination (10, 20, 50, 100 rows).
+- ⚙️ **Actions:** Dropdown menu untuk Edit, Delete, dan View Detail.
+- 🗑️ **Bulk Delete:** Konfirmasi hapus data massal dengan Alert Dialog.
+- ⏳ **Skeleton Loading:** Animasi loading state yang smooth.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 👤 Profile Management
+
+- **Profile Page:** Desain header full-width gradient.
+- **Tabs Navigation:** Pemisahan General Info & Security.
+- **Forms:** Layout form yang rapi dan responsif.
+
+---
+
+## 🛠️ Tech Stack
+
+Project ini dibangun menggunakan library terbaik di kelasnya:
+
+- **Core:** React, TypeScript, Vite
+- **Styling:** Tailwind CSS, PostCSS
+- **UI Components:** shadcn/ui (Radix UI based)
+- **Icons:** Lucide React
+- **Routing:** React Router DOM v6
+- **Data Display:** TanStack Table v8
+- **Charts:** ApexCharts / React-ApexCharts
+- **Date Handling:** date-fns, React Day Picker
+- **Animation:** Framer Motion, Tailwind Animate
+- **Form Handling:** React Hook Form + Zod (Validation)
+
+---
+
+## 🚀 Cara Instalasi
+
+Ikuti langkah ini untuk menjalankan project di lokal:
+
+1.  **Clone Repository**
+
+    ```bash
+    git clone [https://github.com/wahyusmktel/master-dashboard-ts.git](https://github.com/wahyusmktel/master-dashboard-ts.git)
+    cd master-dashboard-ts
+    ```
+
+2.  **Install Dependencies**
+
+    ```bash
+    npm install
+    ```
+
+3.  **Jalankan Development Server**
+
+    ```bash
+    npm run dev
+    ```
+
+4.  **Buka di Browser**
+    Akses `http://localhost:5173`
+
+---
+
+## 📂 Struktur Folder
+
+Arsitektur folder dirancang menggunakan pendekatan **Feature-Based** agar mudah diskalakan.
+
+```text
+src/
+├── components/         # Komponen Reusable (Button, Input, dll)
+│   ├── shared/         # Widget khusus (Chart, Calendar, Tracking)
+│   └── ui/             # Komponen shadcn
+├── config/             # Konfigurasi Menu & App
+├── features/           # Modul fitur (Auth, Users, dll) - Optional
+├── hooks/              # Custom Hooks (useSidebar, useTheme)
+├── layouts/            # Layout Utama (Sidebar, Header, MainLayout)
+├── lib/                # Utilities (cn, utils)
+├── pages/              # Halaman Aplikasi (Login, Dashboard, Profile, Table)
+├── router/             # Konfigurasi Routing & Guards
+└── main.tsx            # Entry Point
 ```
