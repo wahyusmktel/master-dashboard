@@ -1,6 +1,14 @@
-import { useState } from "react"; // Import useState
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X, Command } from "lucide-react"; // Import icon X (Silang)
+import {
+  Menu,
+  X,
+  Command,
+  User,
+  Settings,
+  HelpCircle,
+  LogOut, // Import ikon-ikon baru
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -21,13 +29,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { navItems } from "@/config/menu";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion"; // Import animasi
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  // State untuk mengontrol Sheet (Menu Mobile)
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
@@ -36,18 +42,15 @@ export default function Header() {
   };
 
   return (
-    // FIX: Tinggi dibuat fix h-[60px] biar sejajar sama Sidebar
     <header className="sticky top-0 z-50 flex h-[60px] items-center gap-4 border-b bg-white/80 px-4 backdrop-blur-md lg:px-6">
-      {/* --- ANIMATED MOBILE MENU BUTTON --- */}
+      {/* --- MOBILE SIDEBAR TRIGGER --- */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
-          {/* Ganti variant jadi 'ghost' biar clean (gak ada border kotak), size agak gedean */}
           <Button
             variant="ghost"
             size="icon"
             className="shrink-0 lg:hidden rounded-full hover:bg-slate-100 w-10 h-10"
           >
-            {/* Logika Animasi: Kalau open putar 90 derajat dan ganti icon */}
             <AnimatePresence mode="wait">
               {isOpen ? (
                 <motion.div
@@ -71,12 +74,10 @@ export default function Header() {
                 </motion.div>
               )}
             </AnimatePresence>
-
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
 
-        {/* Isi Sidebar Mobile */}
         <SheetContent
           side="left"
           className="flex flex-col w-[300px] sm:w-[350px]"
@@ -98,7 +99,7 @@ export default function Header() {
                 <Link
                   key={index}
                   to={item.href}
-                  onClick={() => setIsOpen(false)} // Tutup menu pas diklik
+                  onClick={() => setIsOpen(false)}
                   className={cn(
                     "flex items-center gap-4 rounded-xl px-4 py-3 transition-colors",
                     isActive
@@ -119,21 +120,23 @@ export default function Header() {
               className="w-full justify-start gap-3 rounded-xl py-6 text-red-600 border-red-100 hover:bg-red-50 hover:text-red-700"
               onClick={handleLogout}
             >
-              <span className="ml-1 font-bold">Log Out</span>
+              <LogOut className="h-5 w-5" />{" "}
+              {/* Tambah Icon Logout di Mobile juga */}
+              <span className="font-bold">Log Out</span>
             </Button>
           </div>
         </SheetContent>
       </Sheet>
 
-      <div className="w-full flex-1">{/* Placeholder search bar */}</div>
+      <div className="w-full flex-1">{/* Spacer */}</div>
 
-      {/* Profile Dropdown */}
+      {/* --- USER PROFILE DROPDOWN (UPDATED) --- */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="icon"
-            className="rounded-full h-9 w-9 border border-slate-200 shadow-sm"
+            className="rounded-full h-9 w-9 border border-slate-200 shadow-sm focus-visible:ring-0"
           >
             <Avatar className="h-8 w-8">
               <AvatarImage src="https://github.com/shadcn.png" />
@@ -142,35 +145,60 @@ export default function Header() {
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
+
+        {/* Konten Dropdown Disesuaikan dengan Referensi Gambar */}
         <DropdownMenuContent
           align="end"
-          className="w-56 rounded-xl shadow-lg p-2"
+          className="w-72 rounded-xl shadow-xl p-2 mt-2"
         >
-          <DropdownMenuLabel className="font-normal">
+          {/* Header Info User */}
+          <DropdownMenuLabel className="p-4">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">Wahyu Ganteng</p>
-              <p className="text-xs leading-none text-muted-foreground">
+              <p className="text-base font-bold text-slate-900 leading-none">
+                Wahyu Ganteng
+              </p>
+              <p className="text-sm font-normal text-slate-500 leading-none">
                 admin@master.com
               </p>
             </div>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className="cursor-pointer rounded-lg">
-            Profile
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer rounded-lg">
-            Billing
-          </DropdownMenuItem>
-          <DropdownMenuItem className="cursor-pointer rounded-lg">
-            Settings
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={handleLogout}
-            className="text-red-600 focus:text-red-600 focus:bg-red-50 font-bold cursor-pointer rounded-lg"
-          >
-            Log out
-          </DropdownMenuItem>
+
+          <div className="px-2 pb-2">
+            <DropdownMenuSeparator className="bg-slate-100" />
+          </div>
+
+          {/* Menu Items Group */}
+          <div className="space-y-1 px-1">
+            <DropdownMenuItem className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 font-medium hover:bg-slate-50 focus:bg-slate-50 transition-colors">
+              <User className="h-5 w-5 text-slate-400" />
+              Edit profile
+            </DropdownMenuItem>
+
+            <DropdownMenuItem className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 font-medium hover:bg-slate-50 focus:bg-slate-50 transition-colors">
+              <Settings className="h-5 w-5 text-slate-400" />
+              Account settings
+            </DropdownMenuItem>
+
+            <DropdownMenuItem className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 font-medium hover:bg-slate-50 focus:bg-slate-50 transition-colors">
+              <HelpCircle className="h-5 w-5 text-slate-400" />
+              Support
+            </DropdownMenuItem>
+          </div>
+
+          <div className="p-2">
+            <DropdownMenuSeparator className="bg-slate-100" />
+          </div>
+
+          {/* Sign Out Button */}
+          <div className="px-1 pb-1">
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="cursor-pointer flex items-center gap-3 p-3 rounded-lg text-slate-700 font-medium hover:bg-red-50 hover:text-red-600 focus:bg-red-50 focus:text-red-600 transition-colors group"
+            >
+              <LogOut className="h-5 w-5 text-slate-400 group-hover:text-red-600 group-focus:text-red-600" />
+              Sign out
+            </DropdownMenuItem>
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
