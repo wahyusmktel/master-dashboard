@@ -7,6 +7,7 @@ import {
   UserPlus,
   List,
   Table as TableIcon,
+  MessageSquare,
 } from "lucide-react";
 
 // Definisikan tipe data menu biar aman
@@ -50,6 +51,11 @@ export const navItems: NavItem[] = [
     title: "Data Master",
     href: "/dashboard/table",
     icon: TableIcon, // Pakai icon Table
+  },
+  {
+    title: "Chat / Pesan",
+    href: "/dashboard/chat",
+    icon: MessageSquare,
   },
   {
     title: "Projects",
