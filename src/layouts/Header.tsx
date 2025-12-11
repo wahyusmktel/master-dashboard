@@ -8,7 +8,9 @@ import {
   Settings,
   HelpCircle,
   LogOut,
-  Bell, // Import Icon Bell
+  Bell,
+  Sun, 
+  Moon, // Import Icon Bell
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,6 +38,7 @@ import { navItems } from "@/config/menu";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/components/theme-provider";
 
 // --- MOCK DATA NOTIFIKASI (Sesuai Referensi Gambar) ---
 const notifications = [
@@ -85,6 +88,7 @@ export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const { setTheme, theme } = useTheme();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -176,6 +180,39 @@ export default function Header() {
 
       {/* Spacer Spacer (Biar konten kanan mojok) */}
       <div className="w-full flex-1"></div>
+
+      {/* --- 4. THEME TOGGLE BUTTON (BARU) --- */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="rounded-full h-10 w-10 border border-transparent hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-slate-600 dark:text-slate-300"
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      >
+        <AnimatePresence mode="wait">
+          {theme === "dark" ? (
+            <motion.div
+              key="moon"
+              initial={{ rotate: -90, scale: 0 }}
+              animate={{ rotate: 0, scale: 1 }}
+              exit={{ rotate: 90, scale: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Moon className="h-5 w-5" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="sun"
+              initial={{ rotate: 90, scale: 0 }}
+              animate={{ rotate: 0, scale: 1 }}
+              exit={{ rotate: -90, scale: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Sun className="h-5 w-5" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <span className="sr-only">Toggle theme</span>
+      </Button>
 
       {/* --- NOTIFICATION POPOVER (NEW) --- */}
       <Popover>
